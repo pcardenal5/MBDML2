@@ -90,6 +90,9 @@ class DoubleDQNAgent(object):
     def _reshape_state_for_net(self, state):
         return np.reshape(state,(1, self.pD['OBSERVATION_SPACE_DIMS']))  
 
+    def get_networks(self):
+        return self.online_network, self.target_network
+
 def test_agent(parameterDictionary):
     env = gym.make('Acrobot-v1')
     env.seed(42)
@@ -121,12 +124,9 @@ def test_agent(parameterDictionary):
             trial_episode_scores.append(episode_score)
             agent.update_epsilon()
             last_100_avg = np.mean(trial_episode_scores[-100:])
-            print ("E %d scored %d, avg %.2f" % (episode_index, episode_score, last_100_avg))
-            if len(trial_episode_scores) >= 100 and last_100_avg >= 195.0:
-                print ("Trial %d solved in %d episodes!" % (trial_index, (episode_index - 100)))
-                break
+            print ("Episode %d finished. Scored %d, avg %.2f" % (episode_index, episode_score, last_100_avg))
         trials.append(np.array(trial_episode_scores))
-    return np.array(trials)
+    return np.array(trials), agent
 
 def plot_trials(trials):
     _, axis = plt.subplots()    
