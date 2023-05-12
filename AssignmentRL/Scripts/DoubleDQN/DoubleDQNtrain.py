@@ -16,17 +16,22 @@ parameterDictionary = {
     'TAU': 0.1,                         # target network soft update hyperparameter
     'HIDDEN_LAYER_SIZE' : 64,
     'EXPERIENCE_REPLAY_BATCH_SIZE': 32,
-    'AGENT_MEMORY_LIMIT': 2000,
-    'MIN_MEMORY_FOR_EXPERIENCE_REPLAY': 500,
+    'AGENT_MEMORY_LIMIT': 200,
+    'MIN_MEMORY_FOR_EXPERIENCE_REPLAY': 100,
     
 #Agent test hyperparameters
-    'NUMBER_OF_TRIALS' : 10,
+    'NUMBER_OF_TRIALS' : 1,
     'MAX_TRAINING_EPISODES' :  10,
     'MAX_STEPS_PER_EPISODE' :  10,
 }
 
-trials = ddqn.test_agent(parameterDictionary)
+trials , agent = ddqn.test_agent(parameterDictionary)
 
-file_name = '../models/DoubleDQNModel.npy'
+
+
+file_name = 'DoubleDQNModel.npy'
+
+
+
 print ('Saving', file_name)
 np.save(file_name, trials)
